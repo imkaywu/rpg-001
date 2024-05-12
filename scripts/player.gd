@@ -17,11 +17,12 @@ var roll_dir = Vector2.LEFT
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
 @onready var animation_state = animation_tree.get("parameters/playback")
+@onready var hit_box = $HitBoxPivot/HitBox
 
 
 func _ready():
 	animation_tree.active = true
-
+	hit_box.knockback_dir = roll_dir
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -48,6 +49,7 @@ func move_state(delta):
 		animation_state.travel("Run")
 		velocity = velocity.move_toward(dir * MaxSpeed, Acceleration * delta)
 		roll_dir = dir
+		hit_box.knockback_dir = dir
 	else:
 		animation_state.travel("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
