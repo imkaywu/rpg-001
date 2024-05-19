@@ -706,10 +706,10 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeStateMachine_1q12c")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Attack/blend_position = Vector2(0, 0)
-parameters/Idle/blend_position = Vector2(2.08165e-12, 2.08165e-12)
-parameters/Roll/blend_position = Vector2(0, 0)
-parameters/Run/blend_position = Vector2(2.08165e-12, 2.08165e-12)
+parameters/Attack/blend_position = Vector2(2.08165e-12, 1)
+parameters/Idle/blend_position = Vector2(2.08165e-12, 1)
+parameters/Roll/blend_position = Vector2(2.08165e-12, 1)
+parameters/Run/blend_position = Vector2(2.08165e-12, 1)
 
 [node name="HitBoxPivot" type="Marker2D" parent="."]
 position = Vector2(2.08165e-12, -4)

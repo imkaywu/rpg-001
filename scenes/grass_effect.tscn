@@ -1,58 +1,53 @@
-[gd_scene load_steps=9 format=3 uid="uid://did3gm18ms31y"]
+[gd_scene load_steps=9 format=3 uid="uid://c2fqud84g78kt"]
 
 [ext_resource type="Texture2D" uid="uid://f13iioxqqjsb" path="res://assets/Effects/GrassEffect.png" id="1_4hu2h"]
-[ext_resource type="Script" path="res://scripts/grass_effect.gd" id="1_dfuot"]
+[ext_resource type="Script" path="res://scripts/effect.gd" id="2_mrbh8"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0yi3l"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtbkm"]
 atlas = ExtResource("1_4hu2h")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_37xil"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yc01p"]
 atlas = ExtResource("1_4hu2h")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_svcsx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjahc"]
 atlas = ExtResource("1_4hu2h")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m7awh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1iy6"]
 atlas = ExtResource("1_4hu2h")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vdys3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6h6j"]
 atlas = ExtResource("1_4hu2h")
 region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_cpbs6"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ykpkh"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0yi3l")
+"texture": SubResource("AtlasTexture_xtbkm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_37xil")
+"texture": SubResource("AtlasTexture_yc01p")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_svcsx")
+"texture": SubResource("AtlasTexture_tjahc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_m7awh")
+"texture": SubResource("AtlasTexture_j1iy6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vdys3")
+"texture": SubResource("AtlasTexture_q6h6j")
 }],
 "loop": false,
-"name": &"fall",
-"speed": 15.0
+"name": &"animate",
+"speed": 10.0
 }]
 
-[node name="GrassEffect" type="Node2D"]
-script = ExtResource("1_dfuot")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_cpbs6")
-animation = &"fall"
-frame = 4
-frame_progress = 1.0
-
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[node name="GrassEffect" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_ykpkh")
+animation = &"animate"
+offset = Vector2(8, 8)
+script = ExtResource("2_mrbh8")

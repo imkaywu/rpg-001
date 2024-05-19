@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+const EnemyDeathEffect = preload('res://scenes/enemy_death_effect.tscn')
 const Friction = 200
 
 @onready var stats = $Stats
@@ -19,3 +20,6 @@ func _on_hurt_box_area_entered(area):
 
 func _on_stats_no_health():
 	queue_free()
+	var enemy_death_effect = EnemyDeathEffect.instantiate()
+	get_parent().add_child(enemy_death_effect)
+	enemy_death_effect.global_position = global_position
