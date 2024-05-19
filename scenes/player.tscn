@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dgajx7o58gx7n" path="res://assets/Player/Player.png" id="1_88w1p"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_e3n6u"]
 [ext_resource type="PackedScene" uid="uid://d4fttsyu86cyt" path="res://scenes/hit_box.tscn" id="3_kne3v"]
-[ext_resource type="Script" path="res://scripts/hit_box.gd" id="4_6osvo"]
+[ext_resource type="Script" path="res://scripts/hit_box_sword.gd" id="4_xn77p"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ff8kc"]
 radius = 4.0
@@ -718,7 +718,7 @@ position = Vector2(2.08165e-12, -4)
 position = Vector2(16, 2.08165e-12)
 collision_layer = 4
 collision_mask = 8
-script = ExtResource("4_6osvo")
+script = ExtResource("4_xn77p")
 
 [node name="CollisionShape2D" parent="HitBoxPivot/HitBox" index="0"]
 shape = SubResource("CapsuleShape2D_vv2d3")
