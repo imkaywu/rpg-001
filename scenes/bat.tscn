@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bbnpcrdhsnabh"]
+[gd_scene load_steps=18 format=3 uid="uid://bbnpcrdhsnabh"]
 
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_bf7k4"]
 [ext_resource type="Texture2D" uid="uid://crvr5e2wtu7h6" path="res://assets/Enemies/Bat.png" id="1_qsdp2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bui1l6ki836ji" path="res://scenes/hurt_box.tscn" id="3_h4egl"]
 [ext_resource type="PackedScene" uid="uid://bjf4jlbtoec1a" path="res://scenes/stats.tscn" id="5_2ie63"]
 [ext_resource type="PackedScene" uid="uid://c2n76k3mb7hua" path="res://scenes/player_detection_zone.tscn" id="6_ljdqj"]
+[ext_resource type="PackedScene" uid="uid://d4fttsyu86cyt" path="res://scenes/hit_box.tscn" id="7_wevdn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bj3lr"]
 atlas = ExtResource("1_qsdp2")
@@ -60,6 +61,9 @@ height = 18.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_per5r"]
 radius = 50.4777
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5y5g1"]
+radius = 5.0
+
 [node name="Bat" type="CharacterBody2D"]
 collision_layer = 16
 script = ExtResource("1_bf7k4")
@@ -68,8 +72,8 @@ script = ExtResource("1_bf7k4")
 sprite_frames = SubResource("SpriteFrames_nufjp")
 animation = &"fly"
 autoplay = "fly"
-frame = 2
-frame_progress = 0.556836
+frame = 1
+frame_progress = 0.0179286
 offset = Vector2(2.08165e-12, -12)
 
 [node name="ShadowSprite2D" type="Sprite2D" parent="."]
@@ -79,8 +83,7 @@ texture = ExtResource("2_7ohms")
 shape = SubResource("CircleShape2D_o1bpp")
 
 [node name="HurtBox" parent="." instance=ExtResource("3_h4egl")]
-collision_layer = 8
-collision_mask = 4
+collision_mask = 8
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, -13)
@@ -94,8 +97,16 @@ max_health = 2
 [node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
 shape = SubResource("CircleShape2D_per5r")
 
+[node name="HitBox" parent="." instance=ExtResource("7_wevdn")]
+collision_layer = 4
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_5y5g1")
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
 
 [editable path="HurtBox"]
 [editable path="PlayerDetectionZone"]
+[editable path="HitBox"]

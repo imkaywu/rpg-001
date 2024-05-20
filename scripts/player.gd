@@ -13,14 +13,17 @@ enum {
 
 var state = MOVE
 var roll_dir = Vector2.DOWN
+var stats = PlayerStats
 
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
 @onready var animation_state = animation_tree.get("parameters/playback")
 @onready var hit_box = $HitBoxPivot/HitBox
+@onready var hurt_box = $HurtBox
 
 
 func _ready():
+	stats.connect("no_health", Callable(self, "queue_free"))
 	animation_tree.active = true
 	hit_box.knockback_dir = roll_dir
 
@@ -76,8 +79,16 @@ func attack_state(delta):
 
 func attack_animation_finished():
 	state = MOVE
-	
+
 
 func roll_animation_finished():
 	velocity = Vector2.ZERO # stop sliding after roll
 	state = MOVE
+
+
+func _on_hurt_box_area_entered(area):
+	stats.health -= 1
+	#TODO: this makes collision box detectable w/o re-entering.
+	#But seems unnecessary for Godot 4.2.
+	#hurt_box.start_invincibility(0.1)
+	hurt_box.create_hit_effect()
