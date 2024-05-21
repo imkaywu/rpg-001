@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bfeuuttfyclxx"]
+[gd_scene load_steps=15 format=3 uid="uid://bfeuuttfyclxx"]
 
 [ext_resource type="PackedScene" uid="uid://c4kjld1fqpggh" path="res://scenes/player.tscn" id="1_ye21q"]
 [ext_resource type="PackedScene" uid="uid://b20viptc0mobv" path="res://scenes/bush.tscn" id="2_ka8ou"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://d2q1lssd4sn4g" path="res://assets/World/DirtTileset.png" id="4_hsov0"]
 [ext_resource type="PackedScene" uid="uid://b7ft3guqbguag" path="res://scenes/grass.tscn" id="6_ywadd"]
 [ext_resource type="PackedScene" uid="uid://bbnpcrdhsnabh" path="res://scenes/bat.tscn" id="7_yhnk2"]
+[ext_resource type="PackedScene" uid="uid://dyb17c47m54b6" path="res://scenes/health_ui.tscn" id="8_ljvbi"]
+[ext_resource type="PackedScene" uid="uid://2yg0srufepin" path="res://scenes/tree.tscn" id="9_p5kvb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d87vo"]
 texture = ExtResource("4_hsov0")
@@ -903,13 +905,13 @@ layer_0/tile_data = PackedInt32Array(196603, 2, 2, 196604, 65538, 2, 196605, 655
 [node name="Bushes" type="Node" parent="."]
 
 [node name="Bush" parent="Bushes" instance=ExtResource("2_ka8ou")]
-position = Vector2(-43, -32)
+position = Vector2(-43, -40)
 
 [node name="Bush2" parent="Bushes" instance=ExtResource("2_ka8ou")]
 position = Vector2(-16, 43)
 
 [node name="Bush3" parent="Bushes" instance=ExtResource("2_ka8ou")]
-position = Vector2(56, -15)
+position = Vector2(106, 6)
 
 [node name="Grass" type="Node" parent="."]
 
@@ -928,10 +930,24 @@ position = Vector2(-85, -57)
 [node name="Bats" type="Node" parent="."]
 
 [node name="Bat" parent="Bats" instance=ExtResource("7_yhnk2")]
-position = Vector2(63, -58)
+position = Vector2(19, -67)
 
 [node name="Bat2" parent="Bats" instance=ExtResource("7_yhnk2")]
 position = Vector2(-100, 8)
 
 [node name="Bat3" parent="Bats" instance=ExtResource("7_yhnk2")]
 position = Vector2(67, 55)
+
+[node name="HealthUI" parent="." instance=ExtResource("8_ljvbi")]
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 27.0
+offset_bottom = -50.0
+
+[node name="Trees" type="Node" parent="."]
+
+[node name="Tree" parent="Trees" instance=ExtResource("9_p5kvb")]
+position = Vector2(-75, 71)
+
+[node name="Tree2" parent="Trees" instance=ExtResource("9_p5kvb")]
+position = Vector2(73, -41)
