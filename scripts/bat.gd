@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var ACCELERATION = 300
 @export var MAX_SPEED = 50
 @export var FRICTION = 200
+@export var PUSH = 400
 
 enum {
 	IDLE,
@@ -19,6 +20,7 @@ var knockback = Vector2.ZERO
 @onready var stats = $Stats
 @onready var player_detection_zone = $PlayerDetectionZone
 @onready var hurt_box = $HurtBox
+@onready var soft_collision = $SoftCollision
 
 
 func _ready():
@@ -41,6 +43,9 @@ func _physics_process(delta):
 			else:
 				state = IDLE
 			animated_sprite_2d.flip_h = velocity.x < 0
+	
+	if soft_collision.is_colliding():
+		velocity += soft_collision.get_push_vector() * delta * PUSH
 	move_and_slide()
 
 
