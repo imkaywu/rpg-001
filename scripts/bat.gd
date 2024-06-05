@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var MAX_SPEED = 50
 @export var FRICTION = 200
 @export var PUSH = 400
+@export var DIST_TO_TARGET = 4
 
 enum {
 	IDLE,
@@ -21,10 +22,12 @@ var knockback = Vector2.ZERO
 @onready var player_detection_zone = $PlayerDetectionZone
 @onready var hurt_box = $HurtBox
 @onready var soft_collision = $SoftCollision
+@onready var wander_controller = $WanderController
 
 
 func _ready():
-	pass
+	state = _pick_random_state([IDLE, WANDER])
+
 
 func _physics_process(delta):
 	knockback = _move_and_slide(knockback, delta)
@@ -33,20 +36,39 @@ func _physics_process(delta):
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION*delta)
 			_seek_player()
+			
+			if wander_controller.get_time_left() == 0:
+				_update_state_and_wander()
 		WANDER:
-			pass
+			_seek_player()
+			
+			if wander_controller.get_time_left() == 0:
+				_update_state_and_wander()
+			_move_towards_position(delta, wander_controller.target_position)
+			
+			if global_position.distance_to(wander_controller.target_position) <= DIST_TO_TARGET:
+				_update_state_and_wander()
 		CHASE:
 			var player = player_detection_zone.player
 			if player != null:
-				var dir = (player.global_position - global_position).normalized()
-				velocity = velocity.move_toward(MAX_SPEED * dir, ACCELERATION * delta)
+				_move_towards_position(delta, player.global_position)
 			else:
 				state = IDLE
-			animated_sprite_2d.flip_h = velocity.x < 0
 	
 	if soft_collision.is_colliding():
 		velocity += soft_collision.get_push_vector() * delta * PUSH
 	move_and_slide()
+
+
+func _move_towards_position(delta, position):
+	var dir = global_position.direction_to(position)
+	velocity = velocity.move_toward(MAX_SPEED * dir, ACCELERATION * delta)
+	animated_sprite_2d.flip_h = velocity.x < 0
+
+
+func _update_state_and_wander():
+	state = _pick_random_state([IDLE, WANDER])
+	wander_controller.set_wander_timer(randi_range(1, 3))
 
 
 func _on_hurt_box_area_entered(area):
@@ -65,6 +87,11 @@ func _on_stats_no_health():
 func _seek_player():
 	if player_detection_zone.is_player_visible():
 		state = CHASE
+
+
+func _pick_random_state(state_list):
+	state_list.shuffle()
+	return state_list.front()
 
 
 func _move_and_slide(motion, delta):
