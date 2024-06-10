@@ -23,6 +23,7 @@ var knockback = Vector2.ZERO
 @onready var hurt_box = $HurtBox
 @onready var soft_collision = $SoftCollision
 @onready var wander_controller = $WanderController
+@onready var animation_player = $AnimationPlayer
 
 
 func _ready():
@@ -75,6 +76,7 @@ func _on_hurt_box_area_entered(area):
 	stats.health -= area.damage # calls the setter
 	knockback = area.knockback_dir * 150
 	hurt_box.create_hit_effect()
+	hurt_box.start_invincibility(0.4)
 
 
 func _on_stats_no_health():
@@ -102,3 +104,11 @@ func _move_and_slide(motion, delta):
 	motion = velocity
 	velocity = vtmp
 	return motion
+
+
+func _on_hurt_box_invincibility_started():
+	animation_player.play("start")
+
+
+func _on_hurt_box_invicibility_ended():
+	animation_player.play("stop")

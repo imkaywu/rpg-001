@@ -4,6 +4,7 @@ const Acceleration = 500
 const MaxSpeed = 80
 const RollSpeed = 80
 const Friction = 500
+const PlayerHurtSound = preload("res://scenes/player_hurt_sound.tscn")
 
 enum {
 	MOVE,
@@ -20,6 +21,7 @@ var stats = PlayerStats
 @onready var animation_state = animation_tree.get("parameters/playback")
 @onready var hit_box = $HitBoxPivot/HitBox
 @onready var hurt_box = $HurtBox
+@onready var blink_animation_player = $BlinkAnimationPlayer
 
 
 func _ready():
@@ -87,8 +89,18 @@ func roll_animation_finished():
 
 
 func _on_hurt_box_area_entered(area):
-	stats.health -= 1
-	#TODO: this makes collision box detectable w/o re-entering.
-	#But seems unnecessary for Godot 4.2.
-	#hurt_box.start_invincibility(0.1)
+	stats.health -= area.damage
+	# This makes collision box detectable w/o re-entering.
+	hurt_box.start_invincibility(0.5)
 	hurt_box.create_hit_effect()
+	
+	var player_hurt_sound = PlayerHurtSound.instantiate()
+	get_tree().current_scene.add_child(player_hurt_sound)
+
+
+func _on_hurt_box_invincibility_started():
+	blink_animation_player.play("start")
+
+
+func _on_hurt_box_invicibility_ended():
+	blink_animation_player.play("stop")
